@@ -1,5 +1,7 @@
-import 'signup_screen.dart';
+
 import 'package:flutter/material.dart';
+import 'signup_screen.dart';
+import 'goal_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -24,9 +26,12 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Demo login successful!'),
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => GoalScreen(
+            username: usernameController.text,
+          ),
         ),
       );
     }
@@ -51,21 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20),
-
-Center(
-  child: TextButton(
-    onPressed: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const SignupScreen(),
-        ),
-      );
-    },
-    child: const Text("Don't have an account? Sign up"),
-  ),
-), 
               const SizedBox(height: 40),
 
               Text(
@@ -75,12 +65,13 @@ Center(
 
               const SizedBox(height: 12),
 
-              const Text('Please login to continue your journey.'),
+              const Text(
+                'Please login to continue your journey.',
+              ),
 
               const SizedBox(height: 32),
 
               const Text('Username'),
-
               const SizedBox(height: 8),
 
               TextField(
@@ -94,7 +85,6 @@ Center(
               const SizedBox(height: 20),
 
               const Text('Password'),
-
               const SizedBox(height: 8),
 
               TextField(
@@ -113,6 +103,24 @@ Center(
                 child: ElevatedButton(
                   onPressed: login,
                   child: const Text('Login'),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SignupScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    "Don't have an account? Sign up",
+                  ),
                 ),
               ),
             ],

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'goal_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -28,9 +29,12 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Account created successfully!'),
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => GoalScreen(
+            username: usernameController.text,
+          ),
         ),
       );
     }
