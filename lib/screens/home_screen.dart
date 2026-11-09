@@ -1,10 +1,10 @@
 import 'streak_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'tips_screen.dart';
 import 'progress_screen.dart';
 import 'daily_checkin_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final String username;
   final String quittingGoal;
   final DateTime? targetDate;
@@ -24,6 +24,11 @@ class HomeScreen extends StatelessWidget {
     required this.mainTrigger,
   });
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   Widget buildMenuCard({
     required BuildContext context,
     required IconData icon,
@@ -85,7 +90,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               // GREETING
               Text(
-                'Hi, $username!',
+                'Hi, ${widget.username}!',
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
 
@@ -154,13 +159,13 @@ class HomeScreen extends StatelessWidget {
                     Icons.flag_outlined,
                     color: Color(0xFF315C55),
                   ),
-                  title: Text(quittingGoal),
+                  title: Text(widget.quittingGoal),
                   subtitle: Text(
-                    targetDate == null
+                    widget.targetDate == null
                         ? 'Your selected goal'
-                        : 'Target date: ${targetDate!.day}/'
-                          '${targetDate!.month}/'
-                          '${targetDate!.year}',
+                        : 'Target date: ${widget.targetDate!.day}/'
+                          '${widget.targetDate!.month}/'
+                          '${widget.targetDate!.year}',
                   ),
                 ),
               ),
@@ -189,9 +194,9 @@ class HomeScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => ProgressScreen(
-                        username: username,
-                        quittingGoal: quittingGoal,
-                        targetDate: targetDate,
+                        username: widget.username,
+                        quittingGoal: widget.quittingGoal,
+                        targetDate: widget.targetDate,
                       ),
                     ),
                   );
@@ -237,12 +242,13 @@ class HomeScreen extends StatelessWidget {
                 title: 'Tips',
                 subtitle: 'Explore helpful information',
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Tips page is coming soon!'),
-                    ),
-                  );
-                },
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const TipsScreen(),
+                  ),
+                );
+              },
               ),
 
               // SUPPORT
@@ -279,13 +285,13 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Smoking frequency: $smokingFrequency'),
+                      Text('Smoking frequency: ${widget.smokingFrequency}'),
                       const Divider(),
-                      Text('Amount: $cigarettesPerDay'),
+                      Text('Amount: ${widget.cigarettesPerDay}'),
                       const Divider(),
-                      Text('Duration: $smokingDuration'),
+                      Text('Duration: ${widget.smokingDuration}'),
                       const Divider(),
-                      Text('Main trigger: $mainTrigger'),
+                      Text('Main trigger: ${widget.mainTrigger}'),
                     ],
                   ),
                 ),
