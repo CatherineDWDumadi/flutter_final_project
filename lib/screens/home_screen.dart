@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'tips_screen.dart';
 import 'progress_screen.dart';
 import 'daily_checkin_screen.dart';
+import 'support_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String username;
@@ -258,9 +259,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: 'Support',
                 subtitle: 'Find support and encouragement',
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Support page is coming soon!'),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SupportScreen(),
                     ),
                   );
                 },
