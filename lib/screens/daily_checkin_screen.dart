@@ -69,9 +69,18 @@ class _DailyCheckInScreenState extends State<DailyCheckInScreen> {
         currentStep++;
       });
     } else {
-  ProgressData.completeCheckIn();
+    // Save reflection as a new diary entry
+    ProgressData.diaryEntries.add(
+      DiaryEntry(
+        reflection: diaryController.text.trim(),
+        date: DateTime.now(),
+      ),
+    );
 
-  showDialog(
+    // Update check-in progress
+    ProgressData.completeCheckIn();
+
+    showDialog(
     context: context,
     builder: (context) => AlertDialog(
       title: const Text('Check-in Completed!'),
