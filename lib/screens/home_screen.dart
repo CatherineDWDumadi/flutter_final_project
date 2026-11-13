@@ -1,9 +1,11 @@
+
 import 'streak_screen.dart';
 import 'package:flutter/material.dart';
 import 'tips_screen.dart';
 import 'progress_screen.dart';
 import 'daily_checkin_screen.dart';
 import 'support_screen.dart';
+import 'diary_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String username;
@@ -221,6 +223,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
 
+              // MY DIARY
+              buildMenuCard(
+                context: context,
+                icon: Icons.menu_book,
+                title: 'My Diary',
+                subtitle: 'Write and reflect on your journey',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DiaryScreen(),
+                    ),
+                  );
+                },
+              ),
+
               // STREAK
               buildMenuCard(
                 context: context,
@@ -236,6 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
+
               // TIPS
               buildMenuCard(
                 context: context,
@@ -243,13 +262,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: 'Tips',
                 subtitle: 'Explore helpful information',
                 onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const TipsScreen(),
-                  ),
-                );
-              },
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const TipsScreen(),
+                    ),
+                  );
+                },
               ),
 
               // SUPPORT
@@ -287,13 +306,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Smoking frequency: ${widget.smokingFrequency}'),
+                      Text(
+                        'Smoking frequency: ${widget.smokingFrequency}',
+                      ),
                       const Divider(),
-                      Text('Amount: ${widget.cigarettesPerDay}'),
+                      Text(
+                        'Amount: ${widget.cigarettesPerDay}',
+                      ),
                       const Divider(),
-                      Text('Duration: ${widget.smokingDuration}'),
+                      Text(
+                        'Duration: ${widget.smokingDuration}',
+                      ),
                       const Divider(),
-                      Text('Main trigger: ${widget.mainTrigger}'),
+                      Text(
+                        'Main trigger: ${widget.mainTrigger}',
+                      ),
                     ],
                   ),
                 ),
