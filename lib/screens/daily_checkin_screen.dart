@@ -108,27 +108,29 @@ class _DailyCheckInScreenState extends State<DailyCheckInScreen> {
     );
   }
 
-  Widget buildOptions({
+Widget buildOptions({
     required List<String> options,
     required String? selectedValue,
     required Function(String) onSelected,
   }) {
-    return Column(
-      children: options.map((option) {
-        return RadioListTile<String>(
-          title: Text(option),
-          value: option,
-          groupValue: selectedValue,
-          activeColor: const Color(0xFF315C55),
-          onChanged: (value) {
-            if (value != null) {
-              setState(() {
-                onSelected(value);
-              });
-            }
-          },
-        );
-      }).toList(),
+    return RadioGroup<String>(
+      groupValue: selectedValue,
+      onChanged: (value) {
+        if (value != null) {
+          setState(() {
+            onSelected(value);
+          });
+        }
+      },
+      child: Column(
+        children: options.map((option) {
+          return RadioListTile<String>(
+            title: Text(option),
+            value: option,
+            activeColor: const Color(0xFF315C55),
+          );
+        }).toList(),
+      ),
     );
   }
 

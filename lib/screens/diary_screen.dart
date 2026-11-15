@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'progress_data.dart';
 
@@ -10,6 +9,58 @@ class DiaryScreen extends StatefulWidget {
 }
 
 class _DiaryScreenState extends State<DiaryScreen> {
+  // ADD DIARY ENTRY
+  void addEntry() {
+    final controller = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: const Text('New Diary Entry'),
+          content: TextField(
+            controller: controller,
+            maxLines: 5,
+            decoration: const InputDecoration(
+              hintText: 'Write your reflection...',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(dialogContext);
+              },
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                final newText = controller.text.trim();
+
+                if (newText.isEmpty) {
+                  return;
+                }
+
+                setState(() {
+                  ProgressData.diaryEntries.add(
+                    DiaryEntry(
+                      reflection: newText,
+                      date: DateTime.now(),
+                    ),
+                  );
+                });
+
+                Navigator.pop(dialogContext);
+              },
+              child: const Text('Save'),
+            ),
+          ],
+        );
+      },
+    ).then((_) {
+      controller.dispose();
+    });
+  }
 
   // EDIT DIARY ENTRY
   void editEntry(int index) {
@@ -46,8 +97,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
                 }
 
                 setState(() {
-                  ProgressData.diaryEntries[index].reflection =
-                      newText;
+                  ProgressData.diaryEntries[index].reflection = newText;
                 });
 
                 Navigator.pop(dialogContext);
@@ -62,7 +112,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
     });
   }
 
-    // DELETE DIARY ENTRY
+  // DELETE DIARY ENTRY
   void deleteEntry(int index) async {
     final confirm = await showDialog<bool>(
       context: context,
@@ -96,6 +146,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     final entries = ProgressData.diaryEntries;
@@ -122,8 +173,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Column(
-                      crossAxisAlignment:
-                          CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // DATE
                         Text(
@@ -142,8 +192,6 @@ class _DiaryScreenState extends State<DiaryScreen> {
 
                         const SizedBox(height: 12),
 
-                        
-                        
                         // EDIT AND DELETE BUTTONS
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -170,6 +218,15 @@ class _DiaryScreenState extends State<DiaryScreen> {
                 );
               },
             ),
+
+      // ADD ENTRY BUTTON
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: addEntry,
+        backgroundColor: const Color(0xFF315C55),
+        foregroundColor: Colors.white,
+        icon: const Icon(Icons.add),
+        label: const Text('Add Entry'),
+      ),
     );
   }
 }

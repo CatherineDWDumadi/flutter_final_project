@@ -50,7 +50,7 @@ class _QuestionnaireScreenState extends State<QuestionnaireScreen> {
     'Other',
   ];
 
-  Widget buildQuestion({
+Widget buildQuestion({
     required String title,
     required String? selectedValue,
     required List<String> options,
@@ -68,22 +68,25 @@ class _QuestionnaireScreenState extends State<QuestionnaireScreen> {
         ),
         const SizedBox(height: 8),
 
-        ...options.map((option) {
-          return RadioListTile<String>(
-            title: Text(option),
-            value: option,
-            groupValue: selectedValue,
-            onChanged: onChanged,
-            contentPadding: EdgeInsets.zero,
-            activeColor: const Color(0xFF315C55),
-          );
-        }),
+        RadioGroup<String>(
+          groupValue: selectedValue,
+          onChanged: onChanged,
+          child: Column(
+            children: options.map((option) {
+              return RadioListTile<String>(
+                title: Text(option),
+                value: option,
+                contentPadding: EdgeInsets.zero,
+                activeColor: const Color(0xFF315C55),
+              );
+            }).toList(),
+          ),
+        ),
 
         const SizedBox(height: 16),
       ],
     );
   }
-
   void submitQuestionnaire() {
     if (smokingFrequency == null ||
         cigarettesPerDay == null ||
