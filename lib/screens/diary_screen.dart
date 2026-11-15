@@ -62,6 +62,40 @@ class _DiaryScreenState extends State<DiaryScreen> {
     });
   }
 
+    // DELETE DIARY ENTRY
+  void deleteEntry(int index) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: const Text('Delete Diary Entry'),
+          content: const Text(
+            'Are you sure you want to delete this entry?',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(dialogContext, false);
+              },
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(dialogContext, true);
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirm == true) {
+      setState(() {
+        ProgressData.diaryEntries.removeAt(index);
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     final entries = ProgressData.diaryEntries;
@@ -108,16 +142,27 @@ class _DiaryScreenState extends State<DiaryScreen> {
 
                         const SizedBox(height: 12),
 
-                        // EDIT BUTTON
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton.icon(
-                            onPressed: () {
-                              editEntry(index);
-                            },
-                            icon: const Icon(Icons.edit),
-                            label: const Text('Edit'),
-                          ),
+                        
+                        
+                        // EDIT AND DELETE BUTTONS
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton.icon(
+                              onPressed: () {
+                                editEntry(index);
+                              },
+                              icon: const Icon(Icons.edit),
+                              label: const Text('Edit'),
+                            ),
+                            TextButton.icon(
+                              onPressed: () {
+                                deleteEntry(index);
+                              },
+                              icon: const Icon(Icons.delete),
+                              label: const Text('Delete'),
+                            ),
+                          ],
                         ),
                       ],
                     ),
